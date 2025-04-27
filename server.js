@@ -44,4 +44,5 @@ app.post('/api/checkout_sessions', async (req, res) => {
 // Puedes añadir app.listen aquí si quieres levantar el servidor localmente:
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Cambio mínimo para forzar redeploy
 
