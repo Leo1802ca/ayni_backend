@@ -1,16 +1,15 @@
-// server.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-require('dotenv').config(); // 🔥 Importamos las variables del .env
+require('dotenv').config();
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // 🔥 Usamos la clave secreta desde el entorno
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 app.use(cors());
-app.use(express.static('public'));
 app.use(bodyParser.json());
 
+// 🔥 Primero tus rutas
 app.post('/api/checkout_sessions', async (req, res) => {
   const { product } = req.body;
 
@@ -25,7 +24,7 @@ app.post('/api/checkout_sessions', async (req, res) => {
             product_data: {
               name: product.name,
             },
-            unit_amount: product.price * 100, // Stripe trabaja en céntimos
+            unit_amount: product.price * 100,
           },
           quantity: 1,
         },
@@ -41,8 +40,8 @@ app.post('/api/checkout_sessions', async (req, res) => {
   }
 });
 
-// Puedes añadir app.listen aquí si quieres levantar el servidor localmente:
+// 🔥 Después archivos estáticos
+app.use(express.static('public'));
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-// Cambio mínimo para forzar redeploy
-
